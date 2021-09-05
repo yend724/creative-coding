@@ -13,7 +13,7 @@
       return;
     }
 
-    const canvasW = window.innerWidth < 600 ? window.innerWidth : 600;
+    const canvasW = window.innerWidth < 720 ? window.innerWidth : 720;
     const canvasH = canvasW;
     canvas.width = canvasW;
     canvas.height = canvasH;
