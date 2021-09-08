@@ -1,0 +1,7 @@
+@import "./foundation/reset";
+@import "./foundation/base";
+body {
+  display: flex;
+  tab-size: 4;
+  white-space: pre-line;
+}

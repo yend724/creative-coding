@@ -8,6 +8,7 @@ module.exports = {
   devtool: "inline-source-map",
   entry: {
     "color-circle": "./src/color-circle/assets/js/index.ts",
+    "img-resolution": "./src/img-resolution/assets/js/index.ts",
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -46,7 +47,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "src/color-circle/html/index.html",
       chunks: ["color-circle"],
-      filename: "[name]/index.html",
+      filename: "color-circle/index.html",
+    }),
+    new HtmlWebpackPlugin({
+      template: "src/img-resolution/html/index.html",
+      chunks: ["img-resolution"],
+      filename: "img-resolution/index.html",
     }),
     new ForkTsCheckerWebpackPlugin(),
   ],
