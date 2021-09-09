@@ -50,7 +50,7 @@
 
       canvas.addEventListener("click", () => {
         if (c === 1) decrease = true;
-        if (c === canvasW / 20) decrease = false;
+        if (c >= canvasW / 20) decrease = false;
         decrease === true ? c++ : c--;
 
         draw(c);
