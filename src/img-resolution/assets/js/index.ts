@@ -41,6 +41,7 @@ import { range } from "./modules/range";
       draw(myImageData);
 
       const loop = () => {
+        ctx.clearRect(0, 0, canvasW, canvasH);
         canvasOnMouseX = range(mouseX - canvasX, 1, canvasW);
         canvasOnMouseY = range(mouseY - canvasY, 1, canvasH);
         tileCountX = Math.ceil(canvasW / canvasOnMouseX);
@@ -63,7 +64,7 @@ import { range } from "./modules/range";
           let a = myImageData.data[i + 3];
           ctx.fillStyle = `rgba(${r},${g},${b},${a})`;
           ctx.fillRect(x, y, tileWidth, tileHeight);
-          i = 4 * (600 * y + x);
+          i = 4 * (600 * y + x + tileWidth);
         }
       }
     };
