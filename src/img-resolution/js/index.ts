@@ -33,7 +33,7 @@ import { range } from "./modules/range";
     let tileHeight = Math.ceil(canvasH / tileCountY);
 
     const img = new Image();
-    img.src = "./assets/img/sample01.jpg";
+    img.src = "./img/sample01.jpg";
 
     img.onload = () => {
       ctx.drawImage(img, 0, 0);

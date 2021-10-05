@@ -1,18 +1,31 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const glob = require("glob");
 const TerserPlugin = require("terser-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+
+const rootDir = path.resolve(__dirname);
+const entries = {};
+const entryFiles = glob.sync(`${rootDir}/src/**/js/**.ts`);
+
+const sliceStr = (original, match) => {
+  return original.replace(match, "");
+};
+entryFiles.forEach((p) => {
+  const rootPath = sliceStr(p, rootDir + "/src");
+  const removedExtentionPath = sliceStr(rootPath, ".ts");
+  entries[removedExtentionPath] = p;
+});
+
+const htmlFiles = glob.sync(`${rootDir}/src/**/**.html`);
 
 module.exports = {
   mode: "production",
   devtool: "inline-source-map",
-  entry: {
-    "color-circle": "./src/color-circle/assets/js/index.ts",
-    "img-resolution": "./src/img-resolution/assets/js/index.ts",
-  },
+  entry: entries,
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name]/assets/js/index.js",
+    path: `${rootDir}/dist`,
+    filename: "[name].js",
   },
   module: {
     rules: [
@@ -44,16 +57,13 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: "src/color-circle/html/index.html",
-      chunks: ["color-circle"],
-      filename: "color-circle/index.html",
-    }),
-    new HtmlWebpackPlugin({
-      template: "src/img-resolution/html/index.html",
-      chunks: ["img-resolution"],
-      filename: "img-resolution/index.html",
-    }),
     new ForkTsCheckerWebpackPlugin(),
+    ...htmlFiles.map((path, i) => {
+      return new HtmlWebpackPlugin({
+        inject: false,
+        filename: `.${sliceStr(path, rootDir + "/src")}`,
+        template: path,
+      });
+    }),
   ],
 };
