@@ -21,7 +21,6 @@ const htmlFiles = glob
   .sync(`./src/**/**.html`)
   .filter((path) => path !== "./src/index.html");
 const urls = htmlFiles.map((file) => sliceStr(file, "/src"));
-console.log(urls);
 
 module.exports = {
   mode: "production",
