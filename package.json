@@ -15,7 +15,8 @@
     "watch:img": "cpx \"src/**/img/**/*.{jpg,png,gif,svg}\" dist/ -w",
     "watch:sass": "sass --embed-source-map src:dist -w",
     "watch:webpack": "webpack --config webpack.dev.js -w",
-    "watch:bs": "browser-sync start --config bs-config.js"
+    "watch:bs": "browser-sync start --config bs-config.js",
+    "deploy": "yarn build && gh-pages -d dist"
   },
   "keywords": [],
   "author": "yend724",
