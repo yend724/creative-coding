@@ -17,7 +17,11 @@ entryFiles.forEach((p) => {
   entries[removedExtentionPath] = p;
 });
 
-const htmlFiles = glob.sync(`${rootDir}/src/**/**.html`);
+const htmlFiles = glob
+  .sync(`./src/**/**.html`)
+  .filter((path) => path !== "./src/index.html");
+const urls = htmlFiles.map((file) => sliceStr(file, "/src"));
+console.log(urls);
 
 module.exports = {
   mode: "production",
@@ -58,10 +62,18 @@ module.exports = {
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
-    ...htmlFiles.map((path, i) => {
+    new HtmlWebpackPlugin({
+      inject: false,
+      filename: `./index.html`,
+      template: "./src/index.html",
+      templateParameters: {
+        pageList: urls,
+      },
+    }),
+    ...htmlFiles.map((path) => {
       return new HtmlWebpackPlugin({
         inject: false,
-        filename: `.${sliceStr(path, rootDir + "/src")}`,
+        filename: `${sliceStr(path, "/src")}`,
         template: path,
       });
     }),
